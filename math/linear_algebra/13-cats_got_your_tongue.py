@@ -7,6 +7,7 @@ along a specified axis.
 
 import numpy as np
 
+
 def np_cat(mat1, mat2, axis=0):
     """
     Concatenates two numpy arrays along the specified axis.
