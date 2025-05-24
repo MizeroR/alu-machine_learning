@@ -16,6 +16,10 @@ def add_matrices2D(mat1, mat2):
         list of list of int/float: A new matrix containing the element-wise sums,
         or None if the input matrices are not the same shape.
     """
-    if len(mat1) != len(mat2) or any(len(r1) != len(r2) for r1, r2 in zip(mat1, mat2)):
+    if len(mat1) != len(mat2) or any(
+        len(r1) != len(r2) for r1, r2 in zip(mat1, mat2)
+    ):
         return None
-    return [[a + b for a, b in zip(r1, r2)] for r1, r2 in zip(mat1, mat2)]
+    return [
+        [a + b for a, b in zip(r1, r2)]
+        for r1, r2 in zip(mat1, mat2)]
