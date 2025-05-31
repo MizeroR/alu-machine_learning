@@ -7,6 +7,7 @@ of a symmetric matrix using its eigenvalues.
 
 import numpy as np
 
+
 def definiteness(matrix):
     """
     Determines the definiteness of a real symmetric matrix.
@@ -25,7 +26,6 @@ def definiteness(matrix):
     """
     if not isinstance(matrix, np.ndarray):
         raise TypeError("matrix must be a numpy.ndarray")
-    
     # Check if matrix is square and 2D
     if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
         return None
