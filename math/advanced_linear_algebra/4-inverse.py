@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
+"""
+This module provides functions to compute the determinant, minor, cofactor,
+adjugate, and inverse of a square matrix.
+"""
+
 
 def determinant(matrix):
+    """Recursively calculates the determinant of a square matrix."""
     if matrix == [[]]:
         return 1
     n = len(matrix)
@@ -16,7 +22,11 @@ def determinant(matrix):
 
 
 def minor(matrix):
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+    """Returns the minor matrix of a square matrix."""
+    if (
+        not isinstance(matrix, list) or
+        not all(isinstance(row, list) for row in matrix)
+    ):
         raise TypeError("matrix must be a list of lists")
     if len(matrix) == 0 or any(len(row) != len(matrix) for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
@@ -27,14 +37,21 @@ def minor(matrix):
     for i in range(n):
         row = []
         for j in range(n):
-            submatrix = [matrix[r][:j] + matrix[r][j+1:] for r in range(n) if r != i]
+            submatrix = [
+                matrix[r][:j] + matrix[r][j+1:]
+                for r in range(n) if r != i
+            ]
             row.append(determinant(submatrix))
         minor_matrix.append(row)
     return minor_matrix
 
 
 def cofactor(matrix):
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+    """Returns the cofactor matrix of a square matrix."""
+    if (
+        not isinstance(matrix, list) or
+        not all(isinstance(row, list) for row in matrix)
+    ):
         raise TypeError("matrix must be a list of lists")
     if len(matrix) == 0 or any(len(row) != len(matrix) for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
@@ -54,7 +71,11 @@ def cofactor(matrix):
 
 
 def adjugate(matrix):
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+    """Returns the adjugate (adjoint) of a square matrix."""
+    if (
+        not isinstance(matrix, list) or
+        not all(isinstance(row, list) for row in matrix)
+    ):
         raise TypeError("matrix must be a list of lists")
     if len(matrix) == 0 or any(len(row) != len(matrix) for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
@@ -62,7 +83,6 @@ def adjugate(matrix):
     cof = cofactor(matrix)
     n = len(cof)
 
-    # Transpose cofactor matrix
     adj = []
     for i in range(n):
         row = []
@@ -74,8 +94,11 @@ def adjugate(matrix):
 
 
 def inverse(matrix):
-    # Input validation
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+    """Returns the inverse of a square matrix if it exists, else None."""
+    if (
+        not isinstance(matrix, list) or
+        not all(isinstance(row, list) for row in matrix)
+    ):
         raise TypeError("matrix must be a list of lists")
     if len(matrix) == 0 or any(len(row) != len(matrix) for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
