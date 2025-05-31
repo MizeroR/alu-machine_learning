@@ -1,8 +1,28 @@
 #!/usr/bin/env python3
+"""
+This module provides a function to determine the definiteness
+of a symmetric matrix using its eigenvalues.
+"""
+
 
 import numpy as np
 
 def definiteness(matrix):
+    """
+    Determines the definiteness of a real symmetric matrix.
+
+    Args:
+        matrix (numpy.ndarray): A 2D NumPy array.
+
+    Returns:
+        str or None: One of the following strings if the matrix is symmetric:
+            - "Positive definite"
+            - "Positive semi-definite"
+            - "Negative definite"
+            - "Negative semi-definite"
+            - "Indefinite"
+        Otherwise, returns None.
+    """
     if not isinstance(matrix, np.ndarray):
         raise TypeError("matrix must be a numpy.ndarray")
     
@@ -10,13 +30,13 @@ def definiteness(matrix):
     if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
         return None
 
-    # Check if matrix is empty or invalid shape
-    if matrix.size == 0:
+    # Check if matrix is symmetric
+    if not np.allclose(matrix, matrix.T):
         return None
 
     # Compute eigenvalues
     try:
-        eigvals = np.linalg.eigvalsh(matrix)  # For symmetric/hermitian matrices, more stable
+        eigvals = np.linalg.eigvalsh(matrix)
     except np.linalg.LinAlgError:
         return None
 
@@ -27,12 +47,11 @@ def definiteness(matrix):
 
     if pos:
         return "Positive definite"
-    if pos_semi and not pos:
+    if pos_semi:
         return "Positive semi-definite"
     if neg:
         return "Negative definite"
-    if neg_semi and not neg:
+    if neg_semi:
         return "Negative semi-definite"
 
-    # If none of the above
     return "Indefinite"
