@@ -5,7 +5,6 @@ and cofactor matrix of a square matrix.
 """
 
 
-
 def determinant(matrix):
     """
     Recursively calculates the determinant of a square matrix.
@@ -49,14 +48,11 @@ def minor(matrix):
         not all(isinstance(row, list) for row in matrix)
     ):
         raise TypeError("matrix must be a list of lists")
-    
     if len(matrix) == 0 or any(len(row) != len(matrix) for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
-    
     n = len(matrix)
     if n == 1:
         return [[1]]
-    
     minor_matrix = []
     for i in range(n):
         row = []
@@ -89,7 +85,6 @@ def cofactor(matrix):
         not all(isinstance(row, list) for row in matrix)
     ):
         raise TypeError("matrix must be a list of lists")
-    
     if len(matrix) == 0 or any(len(row) != len(matrix) for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
 
