@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
+"""
+This module contains a function `determinant` to calculate the determinant
+of a square matrix represented as a list of lists.
+"""
+
 
 def determinant(matrix):
     # Check if matrix is a list of lists
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+    if not isinstance(matrix, list) or \
+        not all(isinstance(row, list) for row in matrix):
         raise TypeError("matrix must be a list of lists")
 
     # Handle 0x0 matrix case: matrix = [[]]
