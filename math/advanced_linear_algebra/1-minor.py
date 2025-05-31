@@ -35,7 +35,7 @@ def minor(matrix):
     Calculates the minor matrix of a square matrix.
 
     Args:
-        matrix (list of lists): The matrix whose minor matrix is to be 
+        matrix (list of lists): The matrix whose minor matrix is to be
         calculated.
 
     Raises:
