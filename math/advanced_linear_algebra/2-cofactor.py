@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def determinant(matrix):
     if matrix == [[]]:
         return 1

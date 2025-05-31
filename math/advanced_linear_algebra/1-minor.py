@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def determinant(matrix):
     # Helper function to calculate determinant, reused here
     if matrix == [[]]:
