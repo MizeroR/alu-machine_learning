@@ -10,7 +10,8 @@ def determinant(matrix):
     Calculates the determinant of a square matrix.
 
     Args:
-        matrix (list of lists): The square matrix to calculate the determinant of.
+        matrix (list of lists): The square matrix to calculate the 
+        determinant of.
 
     Raises:
         TypeError: If matrix is not a list of lists.
