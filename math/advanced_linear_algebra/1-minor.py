@@ -1,6 +1,20 @@
 #!/usr/bin/env python3
+"""
+This module contains a function `minor` to calculate the minor matrix of a
+square matrix, and a helper function `determinant` to support that computation.
+"""
+
 
 def determinant(matrix):
+    """
+    Recursively calculates the determinant of a square matrix.
+
+    Args:
+        matrix (list of lists): A square matrix.
+
+    Returns:
+        int or float: Determinant of the matrix.
+    """
     # Helper function to calculate determinant, reused here
     if matrix == [[]]:
         return 1
@@ -17,8 +31,22 @@ def determinant(matrix):
 
 
 def minor(matrix):
+    """
+    Calculates the minor matrix of a square matrix.
+
+    Args:
+        matrix (list of lists): The matrix whose minor matrix is to be calculated.
+
+    Raises:
+        TypeError: If matrix is not a list of lists.
+        ValueError: If matrix is not a non-empty square matrix.
+
+    Returns:
+        list of lists: The minor matrix.
+    """
     # Check if matrix is a list of lists
-    if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+    if (not isinstance(matrix, list) or
+            not all(isinstance(row, list) for row in matrix)):
         raise TypeError("matrix must be a list of lists")
 
     # Check if matrix is non-empty and square
