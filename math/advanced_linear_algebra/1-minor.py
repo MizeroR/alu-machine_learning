@@ -35,7 +35,8 @@ def minor(matrix):
     Calculates the minor matrix of a square matrix.
 
     Args:
-        matrix (list of lists): The matrix whose minor matrix is to be calculated.
+        matrix (list of lists): The matrix whose minor matrix is to be 
+        calculated.
 
     Raises:
         TypeError: If matrix is not a list of lists.
@@ -64,7 +65,10 @@ def minor(matrix):
         row = []
         for j in range(n):
             # Create submatrix removing row i and column j
-            submatrix = [matrix[r][:j] + matrix[r][j+1:] for r in range(n) if r != i]
+            submatrix = [
+                matrix[r][:j] + matrix[r][j+1:]
+                for r in range(n) if r != i
+            ]
             # Calculate determinant of the submatrix
             det_sub = determinant(submatrix)
             row.append(det_sub)
