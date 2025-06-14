@@ -19,7 +19,7 @@ def poly_integral(poly, C=0):
             not all(isinstance(x, (int, float)) for x in poly) or
             not poly):
         return None
-    
+
     if not isinstance(C, int):
         return None
 
