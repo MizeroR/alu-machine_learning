@@ -12,7 +12,7 @@ def poly_integral(poly, C=0):
         C (int): Integration constant.
 
     Returns:
-        list or None: Integral polynomial coefficients list, or None if invalid.
+        list or None: Integral polynomial coefficients list.
     """
     # Validate inputs
     if (not isinstance(poly, list) or
