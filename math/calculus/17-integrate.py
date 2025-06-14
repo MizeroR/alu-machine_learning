@@ -3,6 +3,7 @@
 Calculates the integral of a polynomial represented as a list of coefficients.
 """
 
+
 def poly_integral(poly, C=0):
     """Compute the integral of the polynomial represented by poly.
 
@@ -11,7 +12,7 @@ def poly_integral(poly, C=0):
         C (int): Integration constant.
 
     Returns:
-        list or None: Integral polynomial coefficients list, or None if input invalid.
+        list or None: Integral polynomial coefficients list, or None if invalid.
     """
     # Validate inputs
     if (not isinstance(poly, list) or
