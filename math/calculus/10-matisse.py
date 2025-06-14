@@ -17,7 +17,8 @@ def poly_derivative(poly):
               Returns [0] if the derivative is zero.
               Returns None if input is invalid.
     """
-    if not isinstance(poly, list) or not all(isinstance(x, (int, float)) for x in poly):
+    if (not isinstance(poly, list) or not poly or
+            not all(isinstance(x, (int, float)) for x in poly)):
         return None
     if len(poly) <= 1:
         return [0]
