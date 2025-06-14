@@ -16,12 +16,14 @@ def poly_integral(poly, C=0):
     """
     # Validate inputs
     if (not isinstance(poly, list) or
-            not all(isinstance(x, (int, float)) for x in poly)):
+            not all(isinstance(x, (int, float)) for x in poly) or
+            not poly):
         return None
+    
     if not isinstance(C, int):
         return None
 
-    integral = [C]  # start with integration constant at index 0
+    integral = [C]
 
     for i, coef in enumerate(poly):
         new_coef = coef / (i + 1)
