@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""
+Module that defines a Normal distribution class.
+"""
+
+
+class Normal:
+    """
+    Represents a normal distribution.
+
+    Attributes:
+        mean (float): Mean of the distribution.
+        stddev (float): Standard deviation of the distribution.
+    """
+
+    def __init__(self, data=None, mean=0., stddev=1.):
+        """
+        Initialize the Normal distribution.
+
+        Args:
+            data (list, optional): Data to estimate mean and stddev.
+            mean (float, optional): Mean of the distribution.
+            stddev (float, optional): Deviation of the distribution.
+
+        Raises:
+            TypeError: If data is not a list.
+            ValueError: If data has fewer than two data points.
+            ValueError: If stddev is not positive.
+        """
+        if data is None:
+            if stddev <= 0:
+                raise ValueError("stddev must be a positive value")
+            self.mean = float(mean)
+            self.stddev = float(stddev)
+        else:
+            if not isinstance(data, list):
+                raise TypeError("data must be a list")
+            if len(data) < 2:
+                raise ValueError("data must contain multiple values")
+            n = len(data)
+            self.mean = float(sum(data) / n)
+            variance = sum((x - self.mean) ** 2 for x in data) / n
+            self.stddev = variance ** 0.5
