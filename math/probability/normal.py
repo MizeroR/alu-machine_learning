@@ -79,7 +79,7 @@ class Normal:
 
         return coefficient * (e ** exponent)
 
-    def cdf(self, x):   
+    def cdf(self, x):
         """
         Calculates the value of the CDF for a given x-value.
         Args:
@@ -89,14 +89,14 @@ class Normal:
         """
         # CDF formula using error function approximation
         # CDF(x) = 0.5 * (1 + erf((x - μ) / (σ * √2)))
-        
+
         # Calculate z-score normalized by √2
         z = (x - self.mean) / (self.stddev * (2 ** 0.5))
-        
+
         # Error function approximation using Taylor series
         # erf(z) ≈ (2/√π) * (z - z³/3 + z⁵/10 - z⁷/42 + z⁹/216 - ...)
         pi = 3.1415926536
-    
+
         # For better accuracy, use more terms in the series
         z2 = z * z
         z3 = z2 * z
@@ -106,7 +106,10 @@ class Normal:
         z11 = z9 * z2
         z13 = z11 * z2
         z15 = z13 * z2
-        
-        erf_z = (2 / (pi ** 0.5)) * (z - z3/3 + z5/10 - z7/42 + z9/216 - z11/1320 + z13/9360 - z15/75600)
-        
+
+        erf_z = (2 / (pi ** 0.5)) * (
+            z - z3/3 + z5/10 - z7/42 +
+            z9/216 - z11/1320 + z13/9360 - z15/75600
+        )
+
         return 0.5 * (1 + erf_z)
