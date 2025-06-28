@@ -93,7 +93,6 @@ class Normal:
         # Calculate z-score normalized by √2
         z = (x - self.mean) / self.stddev
 
-
         # Error function approximation using Taylor series
         # erf(z) ≈ (2/√π) * (z - z³/3 + z⁵/10 - z⁷/42 + z⁹/216 - ...)
         pi = 3.1415926536
