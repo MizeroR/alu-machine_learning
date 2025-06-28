@@ -93,20 +93,21 @@ class Normal:
         # Calculate z-score normalized by √2
         z = (x - self.mean) / self.stddev
 
-        if z < 0:
-            return 1 - self.cdf(2 * self.mean - x)
 
         # Error function approximation using Taylor series
         # erf(z) ≈ (2/√π) * (z - z³/3 + z⁵/10 - z⁷/42 + z⁹/216 - ...)
         pi = 3.1415926536
         e = 2.7182818285
 
+        if z < 0:
+            return 1 - self.cdf(2 * self.mean - x)
+
         # For better accuracy, use more terms in the series
-        a1 = 0.254829592
-        a2 = -0.284496736
-        a3 = 1.421413741
-        a4 = -1.453152027
-        a5 = 1.061405429
+        a1 = 0.31938153
+        a2 = -0.356563782
+        a3 = 1.781477937
+        a4 = -1.821255978
+        a5 = 1.330274429
 
         k = 1 / (1 + 0.2316419 * z)
 
