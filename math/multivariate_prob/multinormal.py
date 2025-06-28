@@ -62,11 +62,9 @@ class MultiNormal:
         diff = x - self.mean
         inv_cov = np.linalg.inv(self.cov)
         det_cov = np.linalg.det(self.cov)
-        pi = 3.1415926536
-        e = 2.7182818285
 
-        exponent = -0.5 * np.dot(diff.T, np.dot(inv_cov, diff))
-        denom = ((2 * pi) ** d) * det_cov
-        result = (1. / (denom ** 0.5)) * (e ** exponent)
+        exponent = -0.5 * np.dot(diff.T, np.dot(inv_cov, diff))[0][0]
+        denom = np.sqrt(((2 * np.pi) ** d) * det_cov)
+        result = (1. / denom) * np.exp(exponent)
 
-        return round(float(result), 17)
+        return result
