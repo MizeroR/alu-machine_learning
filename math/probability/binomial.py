@@ -87,4 +87,5 @@ class Binomial:
         if k < 0 or k > self.n:
             return 0
 
-        return self._comb(self.n, k) * (self.p ** k) * ((1 - self.p) ** (self.n - k))
+        return self._comb(self.n, k) * (self.p ** k) * (
+            (1 - self.p) ** (self.n - k))
