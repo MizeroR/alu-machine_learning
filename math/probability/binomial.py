@@ -71,7 +71,8 @@ class Binomial:
 
     def _comb(self, n, k):
         """Returns the number of combinations of n items taken k at a time"""
-        return self._factorial(n) // (self._factorial(k) * self._factorial(n - k))
+        return self._factorial(n) // (self._factorial(k) *
+                                      self._factorial(n - k))
 
     def pmf(self, k):
         """
@@ -87,4 +88,5 @@ class Binomial:
         if k < 0 or k > self.n:
             return 0
 
-        return self._comb(self.n, k) * (self.p ** k) * ((1 - self.p) ** (self.n - k))
+        return self._comb(self.n, k) * (self.p ** k) * ((1 - self.p) **
+                                                        (self.n - k))
