@@ -96,20 +96,26 @@ class Normal:
         # Error function approximation using Taylor series
         # erf(z) ≈ (2/√π) * (z - z³/3 + z⁵/10 - z⁷/42 + z⁹/216 - ...)
         pi = 3.1415926536
+        e = 2.7182818285
 
         # For better accuracy, use more terms in the series
-        z2 = z * z
-        z3 = z2 * z
-        z5 = z3 * z2
-        z7 = z5 * z2
-        z9 = z7 * z2
-        z11 = z9 * z2
-        z13 = z11 * z2
-        z15 = z13 * z2
-
-        erf_z = (2 / (pi ** 0.5)) * (
-            z - z3/3 + z5/10 - z7/42 +
-            z9/216 - z11/1320 + z13/9360 - z15/75600
+        a1 = 0.254829592
+        a2 = -0.284496736
+        a3 = 1.421413741
+        a4 = -1.453152027
+        a5 = 1.061405429
+        p = 0.3275911
+        
+        # Handle sign
+        sign = 1 if z >= 0 else -1
+        z = abs(z)
+        
+        # Approximation formula
+        t = 1.0 / (1.0 + p * z)
+        y = 1.0 - (((((a5 * t + a4) * t) + a3) *
+                    t + a2) * t + a1) * t * (e ** (-z * z)
         )
+        
+        erf_z = sign * y
 
         return 0.5 * (1 + erf_z)
