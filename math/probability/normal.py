@@ -91,7 +91,10 @@ class Normal:
         # CDF(x) = 0.5 * (1 + erf((x - μ) / (σ * √2)))
 
         # Calculate z-score normalized by √2
-        z = (x - self.mean) / (self.stddev * (2 ** 0.5))
+        z = (x - self.mean) / self.stddev
+
+        if z < 0:
+            return 1 - self.cdf(2 * self.mean - x)
 
         # Error function approximation using Taylor series
         # erf(z) ≈ (2/√π) * (z - z³/3 + z⁵/10 - z⁷/42 + z⁹/216 - ...)
@@ -104,17 +107,11 @@ class Normal:
         a3 = 1.421413741
         a4 = -1.453152027
         a5 = 1.061405429
-        p = 0.3275911
 
-        # Handle sign
-        sign = 1 if z >= 0 else -1
-        z = abs(z)
-        
-        # Approximation formula
-        t = 1.0 / (1.0 + p * z)
-        y = 1.0 - (((((a5 * t + a4) * t) + a3) *
-                    t + a2) * t + a1) * t * (e ** (-z * z))
+        k = 1 / (1 + 0.2316419 * z)
 
-        erf_z = sign * y
+        pdf_z = (1 / (2 * pi) ** 0.5) * (e ** (-0.5 * z * z))
 
-        return 0.5 * (1 + erf_z)
+        cdf_z = 1 - pdf_z * (a1 * k + a2 * k**2 + a3 * k**3 + a4 * k**4 + a5 * k**5)
+
+        return cdf_z
