@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 """
-This module defines a Poisson class that represents a Poisson distribution.
+Poisson distribution class without external imports.
 """
-
-
-import math
 
 
 class Poisson:
@@ -15,15 +12,6 @@ class Poisson:
     def __init__(self, data=None, lambtha=1.):
         """
         Initializes the Poisson distribution.
-
-        Parameters:
-        - data (list): Optional list of data to estimate the distribution.
-        - lambtha (float): Expected number of occurrences in a given time frame.
-
-        Raises:
-        - TypeError: If data is not a list.
-        - ValueError: If data contains fewer than two values or
-                      if lambtha is not a positive value.
         """
         if data is None:
             if lambtha <= 0:
@@ -41,15 +29,37 @@ class Poisson:
         Calculates the PMF for a given number of successes.
 
         Args:
-            k (int or float): Number of successes.
+            k: number of successes (int or convertible to int)
 
         Returns:
-            float: PMF value for k.
+            PMF value for k (float)
         """
         if not isinstance(k, int):
             k = int(k)
         if k < 0:
             return 0
 
-        lambtha = self.lambtha
-        return (math.exp(-lambtha) * (lambtha ** k)) / math.factorial(k)
+        return (self._exp(-self.lambtha) *
+                (self.lambtha ** k)) / self._factorial(k)
+
+    def _factorial(self, n):
+        """
+        Computes factorial of n.
+        """
+        if n == 0 or n == 1:
+            return 1
+        fact = 1
+        for i in range(2, n + 1):
+            fact *= i
+        return fact
+
+    def _exp(self, x):
+        """
+        Computes the exponential of x using a Taylor series approximation.
+        """
+        result = 1
+        term = 1
+        for i in range(1, 50):  # 50 terms for good accuracy
+            term *= x / i
+            result += term
+        return result
