@@ -105,7 +105,7 @@ class Normal:
         a4 = -1.453152027
         a5 = 1.061405429
         p = 0.3275911
-        
+
         # Handle sign
         sign = 1 if z >= 0 else -1
         z = abs(z)
@@ -113,9 +113,8 @@ class Normal:
         # Approximation formula
         t = 1.0 / (1.0 + p * z)
         y = 1.0 - (((((a5 * t + a4) * t) + a3) *
-                    t + a2) * t + a1) * t * (e ** (-z * z)
-        )
-        
+                    t + a2) * t + a1) * t * (e ** (-z * z))
+
         erf_z = sign * y
 
         return 0.5 * (1 + erf_z)
