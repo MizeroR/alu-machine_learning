@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Module that defines a Binomial distribution class.
+Defines an Binomial distribution class without external modules.
 """
 
 
