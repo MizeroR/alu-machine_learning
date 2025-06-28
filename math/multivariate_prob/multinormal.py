@@ -63,8 +63,6 @@ class MultiNormal:
         inv_cov = np.linalg.inv(self.cov)
         det_cov = np.linalg.det(self.cov)
 
-        exponent = -0.5 * np.dot(diff.T, np.dot(inv_cov, diff))[0][0]
+        exponent = -0.5 * np.matmul(np.matmul(diff.T, inv_cov), diff)[0][0]
         denom = np.sqrt(((2 * np.pi) ** d) * det_cov)
-        result = (1. / denom) * np.exp(exponent)
-
-        return float("{:.17f}".format(result))
+        return (1.0 / denom) * np.exp(exponent)
