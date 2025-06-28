@@ -61,6 +61,7 @@ class Binomial:
 
             # Recalculate p using the rounded n
             self.p = mean / self.n
+
     def _factorial(self, num):
         """Compute factorial of a number"""
         result = 1
