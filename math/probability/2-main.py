@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import numpy as np
+import numpy as np # type: ignore
 Poisson = __import__('poisson').Poisson
 
 np.random.seed(0)
