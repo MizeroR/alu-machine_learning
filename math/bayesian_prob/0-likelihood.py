@@ -52,4 +52,5 @@ def likelihood(x, n, P):
     # Likelihood calculation
     binom_coeff = comb(n, x)
     likelihoods = binom_coeff * (P ** x) * ((1 - P) ** (n - x))
+
     return np.array(likelihoods)
