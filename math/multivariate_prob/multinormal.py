@@ -67,4 +67,4 @@ class MultiNormal:
         denom = np.sqrt(((2 * np.pi) ** d) * det_cov)
         result = (1. / denom) * np.exp(exponent)
 
-        return result
+        return float("{:.17f}".format(result))
