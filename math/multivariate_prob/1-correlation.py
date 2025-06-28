@@ -5,6 +5,7 @@ Calculates the correlation matrix from a covariance matrix.
 
 import numpy as np  # type: ignore
 
+
 def correlation(C):
     """
     Calculates a correlation matrix.
