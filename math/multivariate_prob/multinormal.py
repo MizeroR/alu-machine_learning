@@ -69,4 +69,4 @@ class MultiNormal:
         denom = ((2 * pi) ** d) * det_cov
         result = (1. / (denom ** 0.5)) * (e ** exponent)
 
-        return round(result, 17)
+        return round(float(result), 17)
