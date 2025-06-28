@@ -9,7 +9,7 @@ class Exponential:
     Represents an exponential distribution.
 
     Attributes:
-        lambtha (float): The expected number of occurrences in a given time frame.
+        lambtha (float): The number of occurrences in a given time.
     """
 
     def __init__(self, data=None, lambtha=1.):
@@ -18,7 +18,7 @@ class Exponential:
 
         Args:
             data (list, optional): List of data to estimate the distribution.
-            lambtha (float, optional): Expected number of occurrences in a time frame.
+            lambtha (float, optional): Number of occurrences in a time frame.
 
         Raises:
             TypeError: If data is not a list.
