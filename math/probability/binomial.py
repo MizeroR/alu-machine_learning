@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+"""
+Module that defines a Binomial distribution class.
+"""
+
+
+class Binomial:
+    """
+    Represents a binomial distribution.
+
+    Attributes:
+        n (int): Number of Bernoulli trials.
+        p (float): Probability of a "success".
+    """
+
+    def __init__(self, data=None, n=1, p=0.5):
+        """
+        Initialize the Binomial distribution.
+
+        Args:
+            data (list, optional): Data to estimate n and p.
+            n (int, optional): Number of Bernoulli trials.
+            p (float, optional): Probability of a "success".
+
+        Raises:
+            TypeError: If data is not a list.
+            ValueError: If data has fewer than two data points.
+            ValueError: If n is not positive.
+            ValueError: If p is not a valid probability.
+        """
+        if data is None:
+            # Use given n and p
+            if n <= 0:
+                raise ValueError("n must be a positive value")
+            if p <= 0 or p >= 1:
+                raise ValueError("p must be greater than 0 and less than 1")
+            self.n = int(n)
+            self.p = float(p)
+        else:
+            # Calculate n and p from data
+            if not isinstance(data, list):
+                raise TypeError("data must be a list")
+            if len(data) < 2:
+                raise ValueError("data must contain multiple values")
+
+            # Calculate mean and variance from data
+            mean = sum(data) / len(data)
+            variance = sum((x - mean) ** 2 for x in data) / len(data)
+
+            # For binomial distribution: mean = n*p, variance = n*p*(1-p)
+            # From these: p = 1 - (variance/mean), n = mean/p
+
+            # Calculate p first
+            p_estimated = 1 - (variance / mean)
+
+            # Calculate n
+            n_estimated = mean / p_estimated
+
+            # Round n to nearest integer
+            self.n = round(n_estimated)
+
+            # Recalculate p using the rounded n
+            self.p = mean / self.n
