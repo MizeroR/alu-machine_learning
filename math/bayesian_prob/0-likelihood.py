@@ -5,19 +5,6 @@ Calculates the likelihood of obtaining data given various probabilities.
 import numpy as np  # type: ignore
 
 
-def factorial(n):
-    """Returns the factorial of n."""
-    result = 1
-    for i in range(2, n + 1):
-        result *= i
-    return result
-
-
-def comb(n, k):
-    """Calculates the binomial coefficient (n choose k)."""
-    return factorial(n) // (factorial(k) * factorial(n - k))
-
-
 def likelihood(x, n, P):
     """
     Calculates the likelihood of obtaining the data x and n
@@ -43,14 +30,21 @@ def likelihood(x, n, P):
     if x > n:
         raise ValueError("x cannot be greater than n")
 
-    if not isinstance(P, np.ndarray) or P.ndim != 1:
+    if not isinstance(P, np.ndarray) or len(P.shape) != 1:
         raise TypeError("P must be a 1D numpy.ndarray")
 
     if np.any((P < 0) | (P > 1)):
         raise ValueError("All values in P must be in the range [0, 1]")
 
+    def factorial(n):
+        """Returns the factorial of n."""
+        result = 1
+        for i in range(2, n + 1):
+            result *= i
+        return result
+
     # Likelihood calculation
-    binom_coeff = comb(n, x)
+    binom_coeff = factorial(n) // (factorial(x) * factorial(n - x))
     likelihoods = binom_coeff * (P ** x) * ((1 - P) ** (n - x))
 
-    return np.array(likelihoods)
+    return likelihoods.astype(float)
