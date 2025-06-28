@@ -3,6 +3,7 @@
 Defines a Poisson distribution class with no external modules.
 """
 
+
 class Poisson:
     """
     Represents a Poisson distribution.
