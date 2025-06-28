@@ -4,10 +4,28 @@ import numpy as np  # type: ignore
 
 
 def factorial(k):
+    """
+    Calculates the factorial of a non-negative integer.
+
+    Parameters:
+        k (int): A non-negative integer whose factorial is to be computed.
+
+    Returns:
+        int: The factorial of k (i.e., k!).
+
+    Raises:
+        ValueError: If k is not an integer or is negative.
+
+    Example:
+        factorial(5)  # returns 120 because 5! = 5 × 4 × 3 × 2 × 1
+    """
+    if not isinstance(k, int) or k < 0:
+        raise ValueError("k must be a non-negative integer")
     result = 1
     for i in range(2, k + 1):
         result *= i
     return result
+
 
 def likelihood(x, n, P):
     """Calculate the likelihood of x successes in n trials for all P."""
@@ -27,6 +45,7 @@ def likelihood(x, n, P):
     binom_coeff = factorial(n) // (factorial(x) * factorial(n - x))
     likelihoods = binom_coeff * (P ** x) * ((1 - P) ** (n - x))
     return np.array(likelihoods, dtype=np.float64)
+
 
 def intersection(x, n, P, Pr):
     """Calculate intersection of data likelihood and prior beliefs."""
