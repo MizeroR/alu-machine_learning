@@ -80,6 +80,17 @@ class Normal:
         return coefficient * (e ** exponent)
 
     def cdf(self, x):
+        """
+        Calculates the value of the CDF (cumulative distribution function)
+        for a given x-value in the normal distribution.
+
+        Args:
+            x (float): The x-value for which to calculate the CDF.
+
+        Returns:
+            float: The probability that a random variable drawn from this
+            normal distribution is less than or equal to x.
+        """
         z = (x - self.mean) / self.stddev
         if z < 0:
             # Use symmetry property
