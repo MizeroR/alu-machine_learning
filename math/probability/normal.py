@@ -112,6 +112,9 @@ class Normal:
 
         pdf_z = (1 / (2 * pi) ** 0.5) * (e ** (-0.5 * z * z))
 
-        cdf_z = 1 - pdf_z * (a1 * k + a2 * k**2 + a3 * k**3 + a4 * k**4 + a5 * k**5)
+        cdf_z = 1 - pdf_z * (a1 * k + a2 *
+                             k**2 + a3 * k**3 + a4 *
+                             k**4 + a5 * k**5
+                            )
 
         return cdf_z
