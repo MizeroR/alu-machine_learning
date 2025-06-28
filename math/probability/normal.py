@@ -80,40 +80,23 @@ class Normal:
         return coefficient * (e ** exponent)
 
     def cdf(self, x):
-        """
-        Calculates the value of the CDF for a given x-value.
-        Args:
-            x (float): The x-value.
-        Returns:
-            float: The CDF value for x.
-        """
-        # CDF formula using error function approximation
-        # CDF(x) = 0.5 * (1 + erf((x - μ) / (σ * √2)))
-
-        # Calculate z-score normalized by √2
         z = (x - self.mean) / self.stddev
-
-        # Error function approximation using Taylor series
-        # erf(z) ≈ (2/√π) * (z - z³/3 + z⁵/10 - z⁷/42 + z⁹/216 - ...)
-        pi = 3.1415926536
-        e = 2.7182818285
-
         if z < 0:
-            return 1 - self.cdf(2 * self.mean - x)
+            # Use symmetry property
+            return 1 - self.cdf(self.mean - (x - self.mean))
 
-        # For better accuracy, use more terms in the series
-        a1 = 0.31938153
-        a2 = -0.356563782
-        a3 = 1.781477937
-        a4 = -1.821255978
-        a5 = 1.330274429
+        p = 0.2316419
+        b1 = 0.319381530
+        b2 = -0.356563782
+        b3 = 1.781477937
+        b4 = -1.821255978
+        b5 = 1.330274429
 
-        k = 1 / (1 + 0.2316419 * z)
+        t = 1 / (1 + p * z)
+        pi = 3.141592653589793
+        e = 2.718281828459045
+        pdf = (1 / (2 * pi) ** 0.5) * (e ** (-z * z / 2))
 
-        pdf_z = (1 / (2 * pi) ** 0.5) * (e ** (-0.5 * z * z))
+        poly = b1 * t + b2 * t**2 + b3 * t**3 + b4 * t**4 + b5 * t**5
 
-        cdf_z = 1 - pdf_z * (a1 * k + a2 *
-                             k**2 + a3 * k**3 + a4 *
-                             k**4 + a5 * k**5)
-
-        return cdf_z
+        return 1 - pdf * poly
