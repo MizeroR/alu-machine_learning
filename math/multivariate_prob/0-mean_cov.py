@@ -3,7 +3,8 @@
 Calculates the mean and covariance of a dataset.
 """
 
-import numpy as np # type: ignore
+import numpy as np  # type: ignore
+
 
 def mean_cov(X):
     """
