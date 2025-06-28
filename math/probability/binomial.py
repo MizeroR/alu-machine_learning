@@ -61,31 +61,3 @@ class Binomial:
 
             # Recalculate p using the rounded n
             self.p = mean / self.n
-
-    def _factorial(self, num):
-        """Compute factorial of a number"""
-        result = 1
-        for i in range(2, num + 1):
-            result *= i
-        return result
-
-    def _comb(self, n, k):
-        """Compute combinations of n and k without importing"""
-        return self._factorial(n) // (self._factorial(k) * self._factorial(n - k))
-
-    def pmf(self, k):
-        """
-        Calculates the value of the PMF for a given number of “successes”
-
-        Args:
-            k (int): Number of “successes”
-
-        Returns:
-            float: PMF value for k
-        """
-        k = int(k)
-        if k < 0 or k > self.n:
-            return 0
-
-        return self._comb(self.n, k) * (self.p ** k) * (
-            (1 - self.p) ** (self.n - k))
