@@ -2,7 +2,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-convolve_grayscale_same = __import__('1-convolve_grayscale_same').convolve_grayscale_same
+convolve_grayscale_same = __import__('1-convolve_grayscale_padding').convolve_grayscale_same
 
 
 if __name__ == '__main__':
