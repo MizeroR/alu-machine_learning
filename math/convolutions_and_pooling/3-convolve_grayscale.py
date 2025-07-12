@@ -3,10 +3,11 @@
 
 import numpy as np
 
+
 def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     """
     Performs convolution on grayscale images with optional padding and stride.
-    
+
     Args:
         images (np.ndarray): shape (m, h, w), multiple grayscale images
         kernel (np.ndarray): shape (kh, kw), convolution kernel
