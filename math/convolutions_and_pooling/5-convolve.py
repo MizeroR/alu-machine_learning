@@ -9,8 +9,8 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
     Performs a convolution on images using multiple kernels.
 
     Parameters:
-        images (np.ndarray): Array with shape (m, h, w, c) containing the images.
-        kernels (np.ndarray): Array with shape (kh, kw, c, nc) containing the kernels.
+        images: Array with shape (m, h, w, c) containing the images.
+        kernels: Array with shape (kh, kw, c, nc) containing the kernels.
         padding (str or tuple): 'same', 'valid', or a tuple (ph, pw).
         stride (tuple): Tuple (sh, sw) for vertical and horizontal stride.
 
@@ -18,7 +18,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
         np.ndarray: Convolved output with shape (m, oh, ow, nc).
 
     Raises:
-        ValueError: If the number of channels in images and kernels do not match.
+        ValueError: If number of channels in images and kernels do not match.
     """
     m, h, w, c = images.shape
     kh, kw, kc, nc = kernels.shape
@@ -45,12 +45,11 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
         ph, pw = padding
 
     # Apply padding
-        padded = np.pad(
-        images,
-        ((0, 0), (ph, ph), (pw, pw), (0, 0)),
-        mode='constant'
-        )
-
+    padded = np.pad(
+    images,
+    ((0, 0), (ph, ph), (pw, pw), (0, 0)),
+    mode='constant'
+    )
 
     # Calculate output dimensions
     oh = (padded.shape[1] - kh) // sh + 1
