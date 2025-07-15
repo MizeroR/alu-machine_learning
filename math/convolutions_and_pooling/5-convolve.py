@@ -1,9 +1,25 @@
 #!/usr/bin/env python3
+"""Performs a valid convolution on grayscale images."""
+
 import numpy as np
 
 
 def convolve(images, kernels, padding='same', stride=(1, 1)):
-    """Performs a convolution on images using multiple kernels"""
+    """
+    Performs a convolution on images using multiple kernels.
+
+    Parameters:
+        images (np.ndarray): Array with shape (m, h, w, c) containing the images.
+        kernels (np.ndarray): Array with shape (kh, kw, c, nc) containing the kernels.
+        padding (str or tuple): 'same', 'valid', or a tuple (ph, pw).
+        stride (tuple): Tuple (sh, sw) for vertical and horizontal stride.
+
+    Returns:
+        np.ndarray: Convolved output with shape (m, oh, ow, nc).
+
+    Raises:
+        ValueError: If the number of channels in images and kernels do not match.
+    """
     m, h, w, c = images.shape
     kh, kw, kc, nc = kernels.shape
     sh, sw = stride
@@ -29,9 +45,12 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
         ph, pw = padding
 
     # Apply padding
-    padded = np.pad(images, 
-                    ((0, 0), (ph, ph), (pw, pw), (0, 0)), mode='constant'
+        padded = np.pad(
+        images,
+        ((0, 0), (ph, ph), (pw, pw), (0, 0)),
+        mode='constant'
         )
+
 
     # Calculate output dimensions
     oh = (padded.shape[1] - kh) // sh + 1
