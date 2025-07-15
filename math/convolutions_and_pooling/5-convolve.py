@@ -46,9 +46,9 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
 
     # Apply padding
     padded = np.pad(
-    images,
-    ((0, 0), (ph, ph), (pw, pw), (0, 0)),
-    mode='constant'
+        images,
+        ((0, 0), (ph, ph), (pw, pw), (0, 0)),
+        mode='constant'
     )
 
     # Calculate output dimensions
