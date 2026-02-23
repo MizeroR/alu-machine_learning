@@ -29,8 +29,8 @@ def kmeans(X, k, iterations=1000):
     C = np.random.uniform(min_vals, max_vals, (k, d))
 
     for _ in range(iterations):  # Loop 1
-        # EXACT distance computation
-        distances = np.linalg.norm(X[:, None] - C, axis=2)
+        # Compute squared distances
+        distances = np.sum((X[:, np.newaxis] - C) ** 2, axis=2)
         clss = np.argmin(distances, axis=1)
 
         new_C = np.copy(C)
@@ -44,7 +44,7 @@ def kmeans(X, k, iterations=1000):
             else:
                 new_C[i] = np.mean(points, axis=0)
 
-        if np.allclose(C, new_C):
+        if np.all(C == new_C):
             return C, clss
 
         C = new_C
