@@ -14,7 +14,7 @@ def expectation_maximization(X, k, iterations=1000,
     Performs the EM algorithm for a GMM
 
     Returns:
-        pi, m, S, g, l
+        pi, m, S, g, log_l
     or
         None, None, None, None, None on failure
     """
@@ -42,12 +42,12 @@ def expectation_maximization(X, k, iterations=1000,
         return None, None, None, None, None
 
     # Initial expectation
-    g, l_prev = expectation(X, pi, m, S)
+    g, log_l_prev = expectation(X, pi, m, S)
     if g is None:
         return None, None, None, None, None
 
     if verbose:
-        print("Log Likelihood after 0 iterations: {:.5f}".format(l_prev))
+        print("Log Likelihood after 0 iterations: {:.5f}".format(log_l_prev))
 
     # ONE LOOP (allowed)
     for i in range(1, iterations + 1):
@@ -58,22 +58,22 @@ def expectation_maximization(X, k, iterations=1000,
             return None, None, None, None, None
 
         # Expectation
-        g, l = expectation(X, pi, m, S)
+        g, log_l = expectation(X, pi, m, S)
         if g is None:
             return None, None, None, None, None
 
         # Verbose printing
         if verbose and (i % 10 == 0 or i == iterations):
             print("Log Likelihood after {} iterations: {:.5f}"
-                  .format(i, l))
+                  .format(i, log_l))
 
         # Early stopping
-        if abs(l - l_prev) <= tol:
+        if abs(log_l - log_l_prev) <= tol:
             if verbose and i % 10 != 0:
                 print("Log Likelihood after {} iterations: {:.5f}"
-                      .format(i, l))
+                      .format(i, log_l))
             break
 
-        l_prev = l
+        log_l_prev = log_l
 
-    return pi, m, S, g, l
+    return pi, m, S, g, log_l
