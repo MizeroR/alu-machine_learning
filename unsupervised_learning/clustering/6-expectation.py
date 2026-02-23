@@ -11,7 +11,7 @@ def expectation(X, pi, m, S):
     Performs the expectation step in EM algorithm
 
     Returns:
-        g, l
+        g, log_l
     or
         None, None on failure
     """
@@ -63,6 +63,6 @@ def expectation(X, pi, m, S):
     g /= likelihood
 
     # Log likelihood
-    l = np.sum(np.log(likelihood))
+    log_l = np.sum(np.log(likelihood))
 
-    return g, l
+    return g, log_l
