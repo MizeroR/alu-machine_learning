@@ -52,5 +52,5 @@ def kmeans(X, k, iterations=1000):
     # Recompute final cluster assignments based on final centroids
     distances = np.sum((X[:, np.newaxis] - C) ** 2, axis=2)
     clss = np.argmin(distances, axis=1)
-    
+
     return C, clss
