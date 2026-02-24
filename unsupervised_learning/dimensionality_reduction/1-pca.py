@@ -1,35 +1,17 @@
 #!/usr/bin/env python3
-"""
-Performs PCA on a dataset
-"""
-
+"""PCA v2 function that reduces to a fixed number of dimensions"""
 import numpy as np
 
 
 def pca(X, ndim):
-    """
-    Performs PCA on X
+    """Performs PCA on a dataset.
 
-    Parameters:
     X: numpy.ndarray of shape (n, d)
-    ndim: int, new dimensionality
-
-    Returns:
-    T: numpy.ndarray of shape (n, ndim)
+    ndim: new dimensionality
+    Returns: T, numpy.ndarray of shape (n, ndim)
     """
-
-    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-        return None
-    if not isinstance(ndim, int) or ndim <= 0 or ndim > X.shape[1]:
-        return None
-
-    # Center the data
-    X_centered = X - np.mean(X, axis=0)
-
-    # Perform SVD
-    U, S, Vt = np.linalg.svd(X_centered, full_matrices=False)
-
-    # Project data
-    T = U[:, :ndim] * S[:ndim]
-
+    X_m = X - np.mean(X, axis=0)
+    U, S, Vt = np.linalg.svd(X_m)
+    W = Vt[:ndim].T
+    T = np.matmul(X_m, W)
     return T
