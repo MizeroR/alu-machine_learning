@@ -49,7 +49,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
         F = np.zeros((M, T))
         F[:, 0] = Initial[:, 0] * Emission[:, Observations[0]]
         for t in range(1, T):
-            F[:, t] = Emission[:, Observations[t]] * (Transition.T @ F[:, t-1])
+            prev = Transition.T @ F[:, t - 1]
+            F[:, t] = Emission[:, Observations[t]] * prev
         P = np.sum(F[:, -1])
         if P == 0:
             P = 1e-12
@@ -58,24 +59,27 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
         B = np.zeros((M, T))
         B[:, -1] = 1
         for t in range(T - 2, -1, -1):
-            B[:, t] = Transition @ (Emission[:, Observations[t + 1]] * B[:, t + 1])
+            B[:, t] = (Transition @
+                       (Emission[:, Observations[t + 1]] * B[:, t + 1]))
 
         # Compute xi and gamma
         xi = np.zeros((M, M, T - 1))
         for t in range(T - 1):
-            xi[:, :, t] = (F[:, t, np.newaxis] * Transition * 
-                          Emission[:, Observations[t + 1]][np.newaxis, :] * 
-                          B[:, t + 1][np.newaxis, :])
+            xi[:, :, t] = (F[:, t, np.newaxis] * Transition *
+                           Emission[:, Observations[t + 1]][np.newaxis, :] *
+                           B[:, t + 1][np.newaxis, :])
             xi[:, :, t] /= P
 
         gamma = (F * B) / P
 
         # Re-estimate Transition
-        Transition = np.sum(xi, axis=2) / np.sum(gamma[:, :-1], axis=1, keepdims=True)
+        Transition = (np.sum(xi, axis=2) /
+                      np.sum(gamma[:, :-1], axis=1, keepdims=True))
 
         # Re-estimate Emission
         for k in range(N):
             mask = (Observations == k)
-            Emission[:, k] = np.sum(gamma[:, mask], axis=1) / np.sum(gamma, axis=1)
+            Emission[:, k] = (np.sum(gamma[:, mask], axis=1) /
+                              np.sum(gamma, axis=1))
 
     return Transition, Emission
