@@ -1,26 +1,18 @@
 #!/usr/bin/env python3
-"""Performs PCA on a dataset"""
-
+"""PCA function that maintains a fraction of variance"""
 import numpy as np
 
 
 def pca(X, var=0.95):
-    """
-    Performs PCA on a dataset
+    """Performs PCA on a dataset.
 
-    X is a numpy.ndarray of shape (n, d) where:
-        n is the number of data points
-        d is the number of dimensions in each point
-        all dimensions have a mean of 0 across all data points
-    var is the fraction of the variance that the PCA transformation
-        should maintain
-
-    Returns: the weights matrix, W, that maintains var fraction of
-        X's original variance
-    W is a numpy.ndarray of shape (d, nd) where nd is the new
-        dimensionality of the transformed X
+    X: numpy.ndarray of shape (n, d), all dimensions have mean 0
+    var: fraction of variance to maintain
+    Returns: W, weights matrix of shape (d, nd)
     """
     U, S, Vt = np.linalg.svd(X)
-    cumvar = np.cumsum(S ** 2) / np.sum(S ** 2)
-    nd = np.argwhere(cumvar >= var)[0, 0] + 1
-    return Vt.T[:, :nd]
+    # Compute explained variance ratio
+    explained = np.cumsum(S ** 2) / np.sum(S ** 2)
+    nd = np.argmax(explained >= var) + 1
+    W = Vt[:nd].T
+    return W
