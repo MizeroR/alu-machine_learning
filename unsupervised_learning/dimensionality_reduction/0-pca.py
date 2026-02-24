@@ -42,8 +42,9 @@ def pca(X, var=0.95):
     cumulative_variance = np.cumsum(explained_variance_ratio)
 
     # Find the minimum number of components to reach variance threshold
-    # We need cumulative_variance[i] >= var for the first time
-    nd = np.argmax(cumulative_variance >= var) + 1
+    # Count how many components have cumulative variance < var
+    # Then we need one more to reach the threshold
+    nd = np.sum(cumulative_variance < var) + 1
 
     # Weights matrix (principal components)
     W = Vt.T[:, :nd]
