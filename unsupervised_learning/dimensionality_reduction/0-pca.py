@@ -11,8 +11,7 @@ def pca(X, var=0.95):
     Returns: W, weights matrix of shape (d, nd)
     """
     U, S, Vt = np.linalg.svd(X)
-    # Compute explained variance ratio
-    explained = np.cumsum(S ** 2) / np.sum(S ** 2)
-    nd = np.argmax(explained >= var) + 1
+    cumvar = np.cumsum(S) / np.sum(S)
+    nd = int(np.sum(cumvar < var)) + 1
     W = Vt[:nd].T
     return W
