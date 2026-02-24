@@ -29,7 +29,7 @@ def viterbi(Observation, Emission, Transition, Initial):
         Probability of obtaining the path sequence.
     """
     if (not isinstance(Observation, np.ndarray) or
-        not isinstance(Emission, np.ndarray)):
+            not isinstance(Emission, np.ndarray)):
         return None, None
 
     if (not isinstance(Transition, np.ndarray) or
