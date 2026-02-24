@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Calculates the most likely sequence of hidden states for a Hidden Markov Model using the Viterbi algorithm.
+Calculates the most likely sequence of hidden states for a Hidden Markov Model
 """
 
 import numpy as np
@@ -28,9 +28,12 @@ def viterbi(Observation, Emission, Transition, Initial):
     P : float
         Probability of obtaining the path sequence.
     """
-    if not isinstance(Observation, np.ndarray) or not isinstance(Emission, np.ndarray):
+    if (not isinstance(Observation, np.ndarray) or
+        not isinstance(Emission, np.ndarray)):
         return None, None
-    if not isinstance(Transition, np.ndarray) or not isinstance(Initial, np.ndarray):
+
+    if (not isinstance(Transition, np.ndarray) or
+            not isinstance(Initial, np.ndarray)):
         return None, None
 
     N = Emission.shape[0]  # number of hidden states
