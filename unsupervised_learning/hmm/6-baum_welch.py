@@ -45,52 +45,37 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
         return None, None
 
     for _ in range(iterations):
-        # Forward algorithm
+        # Forward algorithm (vectorized)
         F = np.zeros((M, T))
         F[:, 0] = Initial[:, 0] * Emission[:, Observations[0]]
         for t in range(1, T):
-            for j in range(M):
-                F[j, t] = (Emission[j, Observations[t]] *
-                           np.sum(F[:, t-1] * Transition[:, j]))
+            F[:, t] = Emission[:, Observations[t]] * (Transition.T @ F[:, t-1])
         P = np.sum(F[:, -1])
+        if P == 0:
+            P = 1e-12
 
-        # Backward algorithm
+        # Backward algorithm (vectorized)
         B = np.zeros((M, T))
         B[:, -1] = 1
         for t in range(T - 2, -1, -1):
-            for i in range(M):
-                B[i, t] = np.sum(Transition[i, :] *
-                                 Emission[:, Observations[t + 1]] *
-                                 B[:, t + 1])
+            B[:, t] = Transition @ (Emission[:, Observations[t + 1]] * B[:, t + 1])
 
         # Compute xi and gamma
         xi = np.zeros((M, M, T - 1))
-        gamma = np.zeros((M, T))
-
         for t in range(T - 1):
-            for i in range(M):
-                for j in range(M):
-                    xi[i, j, t] = (F[i, t] * Transition[i, j] *
-                                   Emission[j, Observations[t + 1]] *
-                                   B[j, t + 1])
-            xi[:, :, t] /= (P if P > 0 else 1e-12)
+            xi[:, :, t] = (F[:, t, np.newaxis] * Transition * 
+                          Emission[:, Observations[t + 1]][np.newaxis, :] * 
+                          B[:, t + 1][np.newaxis, :])
+            xi[:, :, t] /= P
 
-        for t in range(T):
-            gamma[:, t] = (F[:, t] * B[:, t]) / (P if P > 0 else 1e-12)
+        gamma = (F * B) / P
 
-        # Re-estimate parameters
-        for i in range(M):
-            denom = gamma[i, :-1].sum()
-            if denom == 0:
-                denom = 1e-12
-            Transition[i, :] = xi[i, :, :].sum(axis=1) / denom
+        # Re-estimate Transition
+        Transition = np.sum(xi, axis=2) / np.sum(gamma[:, :-1], axis=1, keepdims=True)
 
-        for i in range(M):
-            for k in range(N):
-                mask = (Observations == k)
-                denom = gamma[i, :].sum()
-                if denom == 0:
-                    denom = 1e-12
-                Emission[i, k] = gamma[i, mask].sum() / denom
+        # Re-estimate Emission
+        for k in range(N):
+            mask = (Observations == k)
+            Emission[:, k] = np.sum(gamma[:, mask], axis=1) / np.sum(gamma, axis=1)
 
     return Transition, Emission
