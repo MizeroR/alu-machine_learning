@@ -23,7 +23,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
         Emission: the converged emission probabilities
         or None, None on failure
     """
-    if not isinstance(Observations, np.ndarray) or len(Observations.shape) != 1:
+    if (not isinstance(Observations, np.ndarray)
+            or len(Observations.shape) != 1):
         return None, None
     if not isinstance(Transition, np.ndarray) or len(Transition.shape) != 2:
         return None, None
