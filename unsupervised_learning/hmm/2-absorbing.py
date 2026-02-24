@@ -5,6 +5,7 @@ Determine if a Markov chain is absorbing
 
 import numpy as np
 
+
 def absorbing(P):
     """
     Determines if a Markov chain is absorbing.
