@@ -25,11 +25,10 @@ def pca(X, var=0.95):
             return None
         n, d = X.shape
         nd = min(var, d)
-        
+
         U, S, Vt = np.linalg.svd(X, full_matrices=False)
         W = Vt.T[:, :nd]
         return W
-    
     if not isinstance(var, float) or var <= 0 or var > 1:
         return None
 
