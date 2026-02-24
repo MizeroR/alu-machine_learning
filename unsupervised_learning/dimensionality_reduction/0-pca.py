@@ -25,17 +25,21 @@ def pca(X, var=0.95):
     # Singular Value Decomposition
     U, S, Vt = np.linalg.svd(X, full_matrices=False)
 
-    # Compute explained variance
-    explained_variance = (S ** 2)
-    total_variance = np.sum(explained_variance)
+    # Compute explained variance ratio
+    explained_variance_ratio = (S ** 2) / np.sum(S ** 2)
 
     # Cumulative variance ratio
-    cumulative_variance = np.cumsum(explained_variance) / total_variance
+    cumulative_variance = np.cumsum(explained_variance_ratio)
 
-    # Find number of components to maintain desired variance
+    # Find number of components needed to reach var
+    # searchsorted finds where var would be inserted to maintain order  
+    # This gives us the index of the first component where cumsum >= var
     nd = np.searchsorted(cumulative_variance, var) + 1
 
-    # Weights matrix
+    # Handle edge case where we need all components
+    nd = min(nd, len(S))
+
+    # Weights matrix (principal components)
     W = Vt.T[:, :nd]
 
     return W
