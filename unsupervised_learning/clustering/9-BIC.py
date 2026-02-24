@@ -19,13 +19,14 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
 
     n, d = X.shape
 
-    if not isinstance(kmin, int) or kmin <= 0:
+    if not isinstance(kmin, int) or kmin <= 0 or n == 0:
         return None, None, None, None
 
-    if kmax is None:
+    if kmax is not None:
+        if not isinstance(kmax, int) or kmax < kmin:
+            return None, None, None, None
+    else:
         kmax = n
-    if not isinstance(kmax, int) or kmax < kmin:
-        return None, None, None, None
 
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None, None, None
