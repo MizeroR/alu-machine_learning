@@ -5,6 +5,7 @@ Performs the Forward algorithm for a Hidden Markov Model
 
 import numpy as np
 
+
 def forward(Observation, Emission, Transition, Initial):
     """
     Performs the forward algorithm for a Hidden Markov Model.
@@ -19,9 +20,9 @@ def forward(Observation, Emission, Transition, Initial):
         F: numpy.ndarray of shape (N, T), forward path probabilities
     """
     if (not isinstance(Observation, np.ndarray) or
-        not isinstance(Emission, np.ndarray) or
-        not isinstance(Transition, np.ndarray) or
-        not isinstance(Initial, np.ndarray)):
+            not isinstance(Emission, np.ndarray) or
+            not isinstance(Transition, np.ndarray) or
+            not isinstance(Initial, np.ndarray)):
         return None, None
 
     T = Observation.shape[0]  # number of observations
@@ -36,7 +37,8 @@ def forward(Observation, Emission, Transition, Initial):
     # Recursive case: t > 0
     for t in range(1, T):
         for j in range(N):
-            F[j, t] = Emission[j, Observation[t]] * np.sum(F[:, t-1] * Transition[:, j])
+            F[j, t] = (Emission[j, Observation[t]] *
+                       np.sum(F[:, t-1] * Transition[:, j]))
 
     # Total probability of observation sequence
     P = np.sum(F[:, -1])
