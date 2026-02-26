@@ -23,24 +23,24 @@ def monte_carlo(env, V, policy, episodes=5000,
     """
 
     for _ in range(episodes):
-        result = env.reset()
-        # Handle both gym and gymnasium API
-        if isinstance(result, tuple):
-            state = result[0]
-        else:
-            state = result
+        state = env.reset()
+        # Handle gymnasium API returning (state, info)
+        if isinstance(state, tuple):
+            state = state[0]
         episode = []
 
         # Generate an episode
         for _ in range(max_steps):
             action = policy(state)
-            result = env.step(action)
-            # Handle both gym (4 returns) and gymnasium (5 returns)
-            if len(result) == 5:
-                new_state, reward, terminated, truncated, _ = result
+            step_result = env.step(action)
+            
+            # Handle both APIs: gym (4) vs gymnasium (5)
+            if len(step_result) == 5:
+                new_state, reward, terminated, truncated, _ = step_result
                 done = terminated or truncated
             else:
-                new_state, reward, done, _ = result
+                new_state, reward, done, _ = step_result
+            
             episode.append((state, reward))
             state = new_state
             if done:
