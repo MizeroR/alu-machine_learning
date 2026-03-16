@@ -5,7 +5,8 @@ import numpy as np
 policy_gradient = __import__('policy_gradient').policy_gradient
 
 
-def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
+def train(env, nb_episodes, alpha=0.000045,
+          gamma=0.98, show_result=False):
     """
     Implements policy gradient training
 
@@ -14,12 +15,12 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
         nb_episodes: number of episodes
         alpha: learning rate
         gamma: discount factor
+        show_result: render every 1000 episodes if True
 
     Returns:
         scores: list of total rewards per episode
     """
 
-    # Initialize weights (state_dim x action_dim)
     weight = np.random.rand(
         env.observation_space.shape[0],
         env.action_space.n
@@ -39,6 +40,10 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
         score = 0
 
         for _ in range(1000):
+
+            # Render every 1000 episodes
+            if show_result and (episode + 1) % 1000 == 0:
+                env.render()
 
             action, grad = policy_gradient(state, weight)
 
@@ -67,7 +72,7 @@ def train(env, nb_episodes, alpha=0.000045, gamma=0.98):
             G = rewards[t] + gamma * G
             discounted[t] = G
 
-        # Normalize rewards (important for stability)
+        # Normalize rewards
         if np.std(discounted) != 0:
             discounted = (discounted - np.mean(discounted)) / np.std(discounted)
 
