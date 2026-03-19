@@ -1,13 +1,7 @@
-Here’s a **clean, one-page README** tailored for your **Policy Gradient project**:
-
----
-
-```markdown
 # Policy Gradient - Reinforcement Learning
 
 This project implements a **Policy Gradient (REINFORCE)** algorithm from scratch using NumPy and OpenAI Gym. The goal is to train an agent to solve the **CartPole-v1** environment by learning a policy directly.
 
----
 
 ## 📌 Concepts Covered
 
@@ -35,6 +29,50 @@ This project implements a **Policy Gradient (REINFORCE)** algorithm from scratch
 ## ⚙️ How It Works
 
 1. **Policy Function**
-   - Computes action probabilities using:
+- Computes action probabilities using:
+    ```
+
+    softmax(state × weight)
+
+    ```
+
+2. **Action Selection**
+- Actions are sampled from the probability distribution.
+
+3. **Gradient Computation**
+- Uses:
+    ```
+
+    grad = stateᵀ × (one_hot(action) - policy)
+
+    ```
+
+4. **Training (REINFORCE)**
+- Collect episode trajectory
+- Compute discounted rewards:
+    ```
+
+    G_t = r_t + γr_{t+1} + ...
+
+    ```
+- Update weights:
+    ```
+
+    θ = θ + α × G_t × grad
+
+    ````
+
+
+## ▶️ Usage
+
+### Train the agent
+```bash
+./2-main.py
+````
+
+### Train with animation
+
+```bash
+./3-main.py
 ```
 
