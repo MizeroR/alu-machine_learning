@@ -76,3 +76,27 @@ This project implements a **Policy Gradient (REINFORCE)** algorithm from scratch
 ./3-main.py
 ```
 
+## 📊 Expected Results
+
+* Initial scores are low (~10–20)
+* Gradual improvement over episodes
+* Converges toward **200 (solved)**
+
+
+## ⚠️ Notes
+
+* Training is stochastic; results may vary
+* Tune hyperparameters for better performance:
+
+  * `alpha` (learning rate)
+  * `gamma` (discount factor)
+* Rendering may require:
+
+```python
+gym.make('CartPole-v1', render_mode='human')
+```
+
+
+## 🚀 Outcome
+
+By the end of training, the agent learns an optimal policy that balances the pole consistently using only **policy gradients**, without value functions.
